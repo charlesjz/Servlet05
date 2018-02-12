@@ -1,0 +1,34 @@
+/**
+ * 
+ */
+/**
+ * @author Jiang
+ * rename files names in the same folder
+ */
+package util;
+
+import   java.io.*;     
+
+public   class   Rename   
+{     
+        public   static   void   main(String[]   args)   {     
+        	
+          File directory = new File("d:/"); 
+          
+          File []files=directory.listFiles();
+          
+          String filename;
+
+          for(int i=0;i<files.length;i++){
+        	  filename = files[i].toString();
+        	  if(filename.contains("[www.17zixueba.com]")){
+        		  filename = filename.substring(filename.indexOf("[www.17zixueba.com]")+19);
+        		  File newFile = new File(directory+filename);
+        		  files[i].renameTo(newFile);
+        		  System.out.println("ok.");
+        	  }
+        	  System.out.println(filename);
+          }
+      }     
+      
+}  

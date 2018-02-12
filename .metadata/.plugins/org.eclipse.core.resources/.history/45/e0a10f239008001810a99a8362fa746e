@@ -1,0 +1,12 @@
+package Chapter21;
+
+public class MyThread extends Thread {
+    private String msg;
+    public MyThread(String s) {
+        msg = s;
+    }
+    public void run() {
+        System.out.println(msg);
+    }
+}
+

@@ -1,0 +1,28 @@
+/**
+ * 
+ */
+/**
+ * @author Jiang
+ * rename files names in the same folder
+ */
+package util;
+
+import   java.io.*;     
+
+public   class   Rename   
+{     
+        public   static   void   main(String[]   args)   {     
+        	
+          File directory = new File("G:/计算机学习/ETL/【03.InformaticaETL工具视频教程】/InformaticaETL工具视频教程 30课"); 
+          
+          File []files=directory.listFiles();
+          
+          File file;
+          
+          for(int i=0;i<files.length;i++){
+        	  file = files[i];
+        	  System.out.println(file);
+          }
+      }     
+      
+}  

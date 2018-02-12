@@ -1,0 +1,11 @@
+package Chapter21;
+
+public class postUrl3 {
+
+	public static void main(String[] args) {
+	    String s = "Hello world.";
+	    MyThread t = new MyThread(s);
+	    t.start();
+	}
+	
+}

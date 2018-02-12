@@ -1,0 +1,8 @@
+/**
+ * AJAX建立和服务器的链接，接收服务器的请求，处理服务器返回的数据
+ */
+window.onload=function(){
+	document.ElementById("ok").onclick=function(){
+		
+	}
+}
