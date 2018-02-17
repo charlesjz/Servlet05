@@ -9,79 +9,103 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Scanner;
+
+import org.apache.commons.lang3.StringUtils;
 
 
-public class postUrl {
+public class postUrl5 {
 
 	public static void main(String[] args) throws IOException {
 //		http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp
 //		lsbh	04903399
 //		verifycode	8107
 //		backurl
-        //发送 POST 请求
+       //发送 POST 请求
 
-		int i=30,j=485;
+		int i=85,j=00;
+		boolean check=false;
+		
 		String str="",str1="",str2="";
-		File f=new File("D:/postUrl.log");
+		str1=StringUtils.leftPad(""+i, 3,"0");
+
+		File f=new File("D:/postUrl_"+str1+".log");
 		FileWriter fw=new FileWriter(f, true);
 		BufferedWriter bf=new BufferedWriter(fw);
 		PrintWriter pw=new PrintWriter(bf);
 		
 		
-		int count=0;
-		int count_item=0;
-		int loop;
-		String item[] = new String[100];
+		int count=1;
+		int anchor=0;
 		
 		do {
-			
-			str1="00"+i;
-			str1=str1.substring(str1.length()-3);
-			str2="0000"+j;
-			str2=str2.substring(str2.length()-5);
-			
+			str1=StringUtils.leftPad(""+i, 3,"0");
+			str2=StringUtils.leftPad(""+j, 5,"0");
 			str="lsbh="+ str1 + str2 +"&verifycode=" +str2+ "&backurl=";
-		
-		
-		
 		
 //		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", "lsbh=04903399&verifycode=8107&backurl=");
 		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", str);
-		        System.out.println(str1+str2);
-		        
-		        if(sr.length()<4500) {
-		        	j++;count++;
-		        	if(count>20){
+		        System.out.println("========================================================"+str1+str2+"=");
+		        check=sr.contains("姓名：</th>      </tr>")|sr.length()<4100 ;
+		        if(!check & (count <=20 | j < anchor)){
+			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
+
+		        	pw.println(sr);
+//		        	System.out.println(sr);
+		        	count=0;
+		        	j++;
+		        }else if(!check & count > 20){
+			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
+
+		        	anchor=j;
+		        		j=anchor-count+20;
+		        	count=0;
+		        	j++;
+		        	continue;
+		        }else if(check & count ==0){
+			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
+
+		        	count=1;
+		        	j++;
+		        }else if(check & count > 0){
+			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
+
+		        	if(j < anchor){
+		        		count++;
+		        		j++;
+		        	}else if(count < 20){
+		        		count++;
+		        		j++;
+		        	}else if(count < 100){
+		        		count+=5;
 		        		j+=5;
-		        	}
-		        	if(count>200){
+		        	}else if(count <1000){
+		        		count+=100;
+		        		j+=100;
+		        	}else{
 		        		i++;
 		        		j=0;
 		        		count=0;
+		        		anchor=0;
+		        		pw.flush();
+		        		pw.close();
+		        		bf.close();
+		        		fw.close();
+		        		
+		        		str1=StringUtils.leftPad(""+i, 3,"0");
+		        		f=new File("D:/postUrl_"+str1+".log");
+		        		fw=new FileWriter(f, true);
+		        		bf=new BufferedWriter(fw);
+		        		pw=new PrintWriter(bf);
+
 		        	}
+		        }else{
+		        	System.out.println("Out of Control!!!!!");
+			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
+
 		        	continue;
 		        }
-		        
-		        if(count>20){
-		        	count=0;j-=5;
-		        }else{
-		        	count=0;j++;
-		        }
-		        System.out.println(sr.length());
-		        
-//		        item[count_item]=sr;
-//		        count_item++;
-//		        
-//		        if(count_item>=100){
-//		        	for (loop=0;loop<item.length;loop++){
-//		        		pw.println(item[loop]);
-//		        	}
-//		        	pw.flush();
-//		        	count_item=0;
-//		        	System.out.println("Finish writing!");
-//		        }
-		        pw.println(sr);
-		        System.out.println(sr);
+
 		} while(i<1000);
 		
 		pw.flush();
