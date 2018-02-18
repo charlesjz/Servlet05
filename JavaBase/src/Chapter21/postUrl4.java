@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
@@ -23,7 +24,7 @@ public class postUrl4 {
 //		backurl
        //∑¢ÀÕ POST «Î«Û
 
-		int i=41,j=2733;
+		int i=53,j=1497;
 		boolean check=false;
 		
 		String str="",str1="",str2="";
@@ -33,6 +34,7 @@ public class postUrl4 {
 		FileWriter fw=new FileWriter(f, true);
 		BufferedWriter bf=new BufferedWriter(fw);
 		PrintWriter pw=new PrintWriter(bf);
+		Date now=new Date();
 		
 		
 		int count=1;
@@ -42,10 +44,11 @@ public class postUrl4 {
 			str1=StringUtils.leftPad(""+i, 3,"0");
 			str2=StringUtils.leftPad(""+j, 5,"0");
 			str="lsbh="+ str1 + str2 +"&verifycode=" +str2+ "&backurl=";
+			now=new Date();
+			System.out.println("==================================================="+now+"====="+str1+str2+"=");
 		
 //		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", "lsbh=04903399&verifycode=8107&backurl=");
 		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", str);
-		        System.out.println("========================================================"+str1+str2+"=");
 		        check=sr.contains("–’√˚£∫</th>      </tr>")|sr.length()<4100 ;
 		        if(!check & (count <=20 | j < anchor)){
 			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
