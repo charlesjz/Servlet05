@@ -57,7 +57,7 @@ public class postUrl5 {
 		
 //		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", "lsbh=04903399&verifycode=8107&backurl=");
 		        sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", str);
-		        check=sr.contains("ÐÕÃû£º</th>      </tr>")|sr.length()<4100 ;
+		        check=!sr.contains("Ë®·Ñ");
 		        if(!check & (count <=20 | j < anchor)){
 			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
 
