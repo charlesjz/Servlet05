@@ -8,11 +8,13 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+//import lombok.Data;
+
 public class ReadAllFileFromParentCatalog {  
     
     //读取一个文件夹下所有文件及子文件夹下的所有文件  
     public void ReadAllFile(String filePath) {  
-    	List<String> results = new ArrayList<String>();
+    	ArrayList<FileInfo> fileInfos = new ArrayList<FileInfo>();
         File f = null;  
         f = new File(filePath);  
         File[] files = f.listFiles(); // 得到f文件夹下面的所有文件。  
@@ -25,16 +27,22 @@ public class ReadAllFileFromParentCatalog {
                 list.add(file);  
             }  
         }  
+        
+        int idx=0;
         for(File file : files) {  
         	if(file.length()>1000000){
-	        	results.add(StringUtils.leftPad(""+file.length(),11,"0")+" "+file.getAbsolutePath());
+        		FileInfo fi=null;
+        		fi.setFilePath(file.getAbsolutePath());
+        		fi.setLen((int)file.length());
+        		fileInfos.add(idx, fi);
+        		idx++;
 //	            System.out.println(file.getAbsolutePath()+", "+file.length()+" for "+map.);  
         	}
         }
-        results.sort(Comparator.naturalOrder());
-        for(String result:results){
-        	System.out.println(result);
-        }
+//        humans.sort((Human h1, Human h2) -> h1.getName().compareTo(h2.getName()));
+        fileInfos.sort((f1, f2) -> f1.getLen() - f2.getLen());
+        fileInfos.forEach(fileInfo -> System.out.println(fileInfo));
+
     }  
       
     //读取一个文件夹下的所有文件夹和文件  
@@ -56,3 +64,22 @@ public class ReadAllFileFromParentCatalog {
         new ReadAllFileFromParentCatalog().ReadAllFile(filePath);  
     }  
 } 
+
+//@Data
+class FileInfo {
+	private String filePath;
+	private int len;
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public long getLen() {
+		return len;
+	}
+	public void setLen(int len) {
+		this.len = len;
+	}
+	
+}

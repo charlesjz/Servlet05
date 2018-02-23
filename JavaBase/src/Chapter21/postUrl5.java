@@ -9,12 +9,16 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Scanner;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.commons.lang3.StringUtils;
 
 
+
 public class postUrl5 {
+	static int counter=0;
 
 	public static void main(String[] args) throws IOException {
 //		http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp
@@ -23,29 +27,36 @@ public class postUrl5 {
 //		backurl
        //∑¢ÀÕ POST «Î«Û
 
-		int i=85,j=00;
+		int i=104,j=0;
 		boolean check=false;
 		
 		String str="",str1="",str2="";
 		str1=StringUtils.leftPad(""+i, 3,"0");
 
-		File f=new File("D:/postUrl_"+str1+".log");
+		File f=new File("D:/postUrl_"+str1+".test");
 		FileWriter fw=new FileWriter(f, true);
 		BufferedWriter bf=new BufferedWriter(fw);
 		PrintWriter pw=new PrintWriter(bf);
+		Date now=new Date();
 		
 		
 		int count=1;
 		int anchor=0;
-		
+		String sr="";
+        new Reminder();
+
 		do {
+			counter=0;
+			sr="";
+
 			str1=StringUtils.leftPad(""+i, 3,"0");
 			str2=StringUtils.leftPad(""+j, 5,"0");
 			str="lsbh="+ str1 + str2 +"&verifycode=" +str2+ "&backurl=";
+			now=new Date();
+			System.out.println("======================="+counter+"============================"+now+"====="+str1+str2+"=");
 		
 //		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", "lsbh=04903399&verifycode=8107&backurl=");
-		        String sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", str);
-		        System.out.println("========================================================"+str1+str2+"=");
+		        sr=sendPost("http://www.dalian-jw.gov.cn:8080/lhsfc/querycx.asp", str);
 		        check=sr.contains("–’√˚£∫</th>      </tr>")|sr.length()<4100 ;
 		        if(!check & (count <=20 | j < anchor)){
 			        System.out.println("j="+j+", anchor="+anchor+", count="+count+", length="+sr.length());
@@ -173,5 +184,29 @@ public class postUrl5 {
         }
         return result;
     }    
+    
+    
+    public static class Reminder{
+        Timer timer;
+        
+        public Reminder(){
+            timer = new Timer();
+            timer.schedule(new TimerTask(){
+                public void run(){
+                	counter++;
+                	if(counter>10){
+                		try {
+                			counter=0;
+							throw new Exception("Time out!");
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                	}
+                }
+            }, 1000,1000);
+        }
+    } 
+
 
 }
