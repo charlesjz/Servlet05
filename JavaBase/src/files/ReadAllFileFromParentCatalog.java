@@ -31,7 +31,7 @@ public class ReadAllFileFromParentCatalog {
         int idx=0;
         for(File file : files) {  
         	if(file.length()>1000000){
-        		FileInfo fi=null;
+        		FileInfo fi=new FileInfo(asList((0,0)));
         		fi.setFilePath(file.getAbsolutePath());
         		fi.setLen((int)file.length());
         		fileInfos.add(idx, fi);
@@ -40,7 +40,7 @@ public class ReadAllFileFromParentCatalog {
         	}
         }
 //        humans.sort((Human h1, Human h2) -> h1.getName().compareTo(h2.getName()));
-        fileInfos.sort((f1, f2) -> f1.getLen() - f2.getLen());
+//        fileInfos.sort((f1, f2) -> f1.getLen() - f2.getLen());
         fileInfos.forEach(fileInfo -> System.out.println(fileInfo));
 
     }  

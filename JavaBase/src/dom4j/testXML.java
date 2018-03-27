@@ -21,19 +21,37 @@ public class testXML {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         try {
-            File file = new File("G:/计算机学习/SSH/Hibernate/2012年1月份汤阳光hibernate视频教程/time.gplf");
+            File file = new File("C:/Temp/PLAYLIST0322.gplf");
             SAXReader reader=new SAXReader();
             //读取xml文件到Document中
             Document doc=reader.read(file);
-            //获取xml文件的根节点
             Element rootElement=doc.getRootElement();
+//            System.out.println(rootElement.asXML());
+//            System.out.println(rootElement.elements().stream().toString());
+            List<Element> listFolder=rootElement.elements("FolderId");
+            for (Element Folder:listFolder){
+            	System.out.println("FolderPath` "+Folder.attributeValue("FolderPath"));
+                List<Element> listVideo=Folder.elements("VideoId");
+                for(Element Video:listVideo){
+                	System.out.print("Name` "+Video.attributeValue("Name"));
+                	System.out.print("` ");
+               	
+                	System.out.println("Duration` "+Video.attributeValue("Duration"));
+
+                }
+
+            }
+ 
+//            System.out.println(rootElement.elements("FolderId"));
+            //获取xml文件的根节点
+//            System.out.println(rootElement.content().toString());
             List<Element> list=rootElement.elements("VideoId");
             for(Element item: list){
             	System.out.println(item.attributeValue("Duration"));
             }
             
             
-            System.out.println(list.toString());
+//            System.out.println(list.toString());
 
         } catch (Exception e) {
             // TODO: handle exception

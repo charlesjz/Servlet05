@@ -24,7 +24,7 @@ public class postUrl4 {
 //		backurl
        //·¢ËÍ POST ÇëÇó
 
-		int i=53,j=1497;
+		int i=104,j=0;
 		boolean check=false;
 		
 		String str="",str1="",str2="";

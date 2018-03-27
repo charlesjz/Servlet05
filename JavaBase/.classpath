@@ -44,5 +44,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="D:/lib/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="lib" path="D:/lib/lombok.jar"/>
+	<classpathentry kind="lib" path="D:/lib/FastJsonJar/fastjson-1.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/lib/FastJsonJar/fastjson-1.2.2-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

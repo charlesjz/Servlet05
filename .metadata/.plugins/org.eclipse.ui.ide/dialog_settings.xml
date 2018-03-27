@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\Eclipse\workspace-java"/>
 		<item value="D:\David\Java Core\John &amp; Peter&apos;s Java Project.zip"/>
 		<item value="C:\Users\Jiang\Downloads\CustomerReview_Exercise"/>
 		<item value="\\Dell\计算机学习\SSH\Struts2\struts2(徐培成)[更新完毕-共享完毕]\02_struts2(徐培成)\代码\lsn_struts2\src"/>
@@ -26,12 +27,19 @@
 			<item value="D:\David\Java Core\John &amp; Peter&apos;s Java Project.zip"/>
 		</list>
 	</section>
-	<section name="NewWizardAction">
-		<item value="org.eclipse.jdt.ui.wizards.JavaProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
-		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.jdt.ui.java"/>
-			<item value="org.eclipse.wst.web.ui"/>
+	<section name="WORKBENCH_SETTINGS">
+		<list key="ENABLED_TRANSFERS">
 		</list>
+	</section>
+	<section name="NewWizardAction">
+		<item value="org.eclipse.m2e.core.wizards.Maven2ProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.m2e"/>
+		</list>
+	</section>
+	<section name="ChooseWorkspaceDialogSettings">
+		<item value="656" key="DIALOG_X_ORIGIN"/>
+		<item value="316" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="BasicNewProjectResourceWizard">
 	</section>
