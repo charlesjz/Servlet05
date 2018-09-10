@@ -34,7 +34,7 @@ public class HyperLinks extends JFrame{
 	private JButton bt_08=new JButton("www.google.ca");
 	private JButton bt_09=new JButton("www.reddit.com");
 	private JButton bt_10=new JButton("www.netflix.com");
-    private JButton bt_exit=new JButton("Exit");
+	private JButton bt_exit=new JButton("Exit");
 
     private JLabel lb_br00=new JLabel("  ");
     private JLabel lb_br01=new JLabel("  ");
@@ -60,16 +60,12 @@ public class HyperLinks extends JFrame{
     private JLabel lb_nl09=new JLabel("  ");
     private JLabel lb_nl10=new JLabel("  ");
 
-//    private JLabel lb_br03=new JLabel("  ");
-//    private JLabel lb_br04=new JLabel("  ");
-//    private JLabel lb_br05=new JLabel("  ");
 
 	public HyperLinks(String title) {
 		// TODO Auto-generated constructor stub
         super(title);
         setLocation(1200,400);
         setSize(400,600);
-//        setSize(450,300);
         setVisible(true);
         GridBagLayout layout = new GridBagLayout();
         this.setLayout(layout);
