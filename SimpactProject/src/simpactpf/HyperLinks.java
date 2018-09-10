@@ -36,29 +36,29 @@ public class HyperLinks extends JFrame{
 	private JButton bt_10=new JButton("www.netflix.com");
 	private JButton bt_exit=new JButton("Exit");
 
-    private JLabel lb_br00=new JLabel("  ");
-    private JLabel lb_br01=new JLabel("  ");
-    private JLabel lb_br02=new JLabel("  ");
-    private JLabel lb_br03=new JLabel("  ");
-    private JLabel lb_br04=new JLabel("  ");
-    private JLabel lb_br05=new JLabel("  ");
-    private JLabel lb_br06=new JLabel("  ");
-    private JLabel lb_br07=new JLabel("  ");
-    private JLabel lb_br08=new JLabel("  ");
-    private JLabel lb_br09=new JLabel("  ");
-    private JLabel lb_br10=new JLabel("  ");
+	private JLabel lb_br00=new JLabel("  ");
+	private JLabel lb_br01=new JLabel("  ");
+	private JLabel lb_br02=new JLabel("  ");
+	private JLabel lb_br03=new JLabel("  ");
+	private JLabel lb_br04=new JLabel("  ");
+	private JLabel lb_br05=new JLabel("  ");
+	private JLabel lb_br06=new JLabel("  ");
+	private JLabel lb_br07=new JLabel("  ");
+	private JLabel lb_br08=new JLabel("  ");
+	private JLabel lb_br09=new JLabel("  ");
+	private JLabel lb_br10=new JLabel("  ");
     
-    private JLabel lb_nl00=new JLabel("  ");
-    private JLabel lb_nl01=new JLabel("  ");
-    private JLabel lb_nl02=new JLabel("  ");
-    private JLabel lb_nl03=new JLabel("  ");
-    private JLabel lb_nl04=new JLabel("  ");
-    private JLabel lb_nl05=new JLabel("  ");
-    private JLabel lb_nl06=new JLabel("  ");
-    private JLabel lb_nl07=new JLabel("  ");
-    private JLabel lb_nl08=new JLabel("  ");
-    private JLabel lb_nl09=new JLabel("  ");
-    private JLabel lb_nl10=new JLabel("  ");
+	private JLabel lb_nl00=new JLabel("  ");
+	private JLabel lb_nl01=new JLabel("  ");
+	private JLabel lb_nl02=new JLabel("  ");
+	private JLabel lb_nl03=new JLabel("  ");
+	private JLabel lb_nl04=new JLabel("  ");
+	private JLabel lb_nl05=new JLabel("  ");
+	private JLabel lb_nl06=new JLabel("  ");
+	private JLabel lb_nl07=new JLabel("  ");
+	private JLabel lb_nl08=new JLabel("  ");
+	private JLabel lb_nl09=new JLabel("  ");
+	private JLabel lb_nl10=new JLabel("  ");
 
 
 	public HyperLinks(String title) {
@@ -365,8 +365,4 @@ public class HyperLinks extends JFrame{
 	}
 
 }
-
-
-
-
 
