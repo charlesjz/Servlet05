@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry including="**/*.java" kind="src" path="src/main/java"/>
+	<classpathentry excluding="**/*.java" kind="src" path="src/main/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/activation-1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/junit-3.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/mail-1.4.3.jar" sourcepath="C:/Users/Jiang/.m2/repository/javax/mail/mail/1.4.3/mail-1.4.3-sources.jar"/>
+	<classpathentry kind="lib" path="lib/spring-2.5.6.jar" sourcepath="C:/Users/Jiang/.m2/repository/org/springframework/spring/2.5.6/spring-2.5.6-sources.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-2.1.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-2.1.0-sources.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/htmlparser-1.6p.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup-1.11.3-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup-1.11.3-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jsoup-1.11.3.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.9.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-annotations-2.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.9.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.9.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-2.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.9.4-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.9.4-sources.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-databind-2.9.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.7-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.7-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang3-3.7.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Selenium3-11"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

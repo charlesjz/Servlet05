@@ -1,0 +1,55 @@
+<!--
+	<bean id="stringTarget" class="java.util.ArrayList" singleton="false"/>
+	<bean id="string2Target" class="java.lang.String" singleton="false">
+		<constructor-arg>
+			<value>abc</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="substringAdvice" class="sample3f.SubstringAdvice"/>
+	
+	<bean id="stringService"
+			class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyTargetClass">
+			<value>true</value>
+		</property>
+		
+		<property name="interceptorNames">
+			<list>
+				<value>substringAdvice</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="stringTarget"/>
+		</property>
+	</bean>
+
+
+/*
+			Customer cust = (Customer) beanFactory.getBean ( "stringService" );
+			cust.setFirstName ( "Peter" );
+			cust.setLastName ( "Hands" );
+			cust.setPhoneNumber( "123-1230" );
+			cust.setEmail( "handsp@hotmail.com" );
+			cust.setAddress( "1 Finch Ave. E" );
+			System.out.println ( cust );
+*/
+/*
+			TestBean tb = (TestBean) beanFactory.getBean ( "stringService" );
+			tb.setValue1 ( "123" );
+			tb.setValue2 ( "abc" );
+			System.out.println ( tb );
+*/
+
+System.out.println ( "------------------------------------" );
+			Object obj = beanFactory.getBean( "stringService" );
+			System.out.println ( obj );
+			List list = (List) obj;
+			list.add( customer1 );
+			list.add ( customer2 );
+			System.out.println ( list );
+			
+			String str = (String) beanFactory.getBean ( "string2Target" );
+			str.concat( "123" );
+			System.out.println ( str );
+-->

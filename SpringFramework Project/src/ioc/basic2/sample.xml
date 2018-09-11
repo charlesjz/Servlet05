@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="ioc.basic2.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerServices"
+			class="ioc.basic2.CustomerServicesImpl"
+			singleton="true">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<property name="customer0">
+			<ref bean="customer"/>
+		</property>
+	</bean>
+
+</beans>

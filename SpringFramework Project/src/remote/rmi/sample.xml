@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer" class="remote.rmi.Customer" singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+
+	<bean id="customerDao" class="remote.rmi.CustomerDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+		<property name="crudStatements">
+			<ref bean="crudStatements" />
+		</property>
+		<property name="customerNoIncrementer">
+			<ref bean="customerNoIncrementer" />
+		</property>
+		<property name="transactionTemplate">
+			<ref bean="transactionTemplate" />
+		</property>
+
+	</bean>
+
+	<bean id="accountDao" class="remote.rmi.AccountDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+		<property name="crudStatements">
+			<ref bean="crudStatements" />
+		</property>
+		<property name="depositCRUD">
+			<ref bean="depositCRUD" />
+		</property>
+		<property name="accountByIdQueryCRUD">
+			<ref bean="accountByIdQueryCRUD" />
+		</property>
+		<property name="transactionTemplate">
+			<ref bean="transactionTemplate" />
+		</property>
+
+	</bean>
+
+	<bean id="customerService" class="remote.rmi.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService" />
+		</constructor-arg>
+
+		<property name="locale">
+			<value>fr_FR</value>
+		</property>
+
+	</bean>
+
+	<bean id="accountService" class="remote.rmi.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao" />
+		</constructor-arg>
+
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+
+	<bean id="customEditorConfigurer"
+		class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="remote.rmi.AccountType">
+					<bean id="accountTypeEditor" class="remote.rmi.AccountTypeEditor" />
+				</entry>
+			</map>
+		</property>
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>remote/rmi/nctbank</value>
+		</property>
+	</bean>
+
+	<bean id="appLoggerInterceptor" class="remote.rmi.ApplicationLoggerInterceptor">
+		<constructor-arg index="0">
+			<value>c:\\applog.txt</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="appLoggerAdvisor"
+		class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="appLoggerInterceptor" />
+		</property>
+		<property name="pattern">
+			<value>#.+</value>
+		</property>
+	</bean>
+
+	<bean id="autoProxyCreator"
+		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>src/remote/rmi/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>${database.driver}</value>
+		</property>
+		<property name="url">
+			<value>${database.url}</value>
+		</property>
+		<property name="username">
+			<value>${database.username}</value>
+		</property>
+		<property name="password">
+			<value>${database.password}</value>
+		</property>
+	</bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<bean id="crudStatements" class="remote.rmi.CRUDStatements">
+		<property name="insertCustomerSql">
+			<value>INSERT INTO SP_CUSTOMER04A ( CUSTOMER_NO, FIRST_NAME,
+				LAST_NAME, PHONE_NUMBER, ADDRESS, EMAIL, CREDIT_LIMIT) VALUES ( ?,
+				?, ?, ?, ?, ?, ? )</value>
+		</property>
+		<property name="findCustomerByIdSql">
+			<value>SELECT * FROM SP_CUSTOMER04A WHERE CUSTOMER_NO = ?</value>
+		</property>
+		<property name="insertAccountSql">
+			<value>INSERT INTO SP_ACCOUNT04A ( ACCOUNT_ID, CUSTOMER_NO, CURRENCY,
+				TYPE, BALANCE ) VALUES ( ?, ?, ?, ?, ? )</value>
+		</property>
+		<property name="accountListSql">
+			<value>SELECT * FROM SP_ACCOUNT04A WHERE CUSTOMER_NO = ?</value>
+		</property>
+		<property name="retrieveCustomerNumberSql">
+			<value>SELECT COUNT(*) FROM SP_CUSTOMER04A</value>
+		</property>
+		<property name="findAccountByIdSql">
+			<value>SELECT * FROM SP_CUSTOMER04A A, SP_ACCOUNT04A B WHERE
+				A.CUSTOMER_NO = B.CUSTOMER_NO AND ACCOUNT_ID = ?</value>
+		</property>
+		<property name="depositSql">
+			<value>UPDATE SP_ACCOUNT04A SET BALANCE = BALANCE + ? WHERE
+				ACCOUNT_ID = ?</value>
+		</property>
+		<property name="customerNoIncSql">
+			<value>SELECT MAX(CUSTOMER_NO) + 1 FROM SP_CUSTOMER04A</value>
+		</property>
+	</bean>
+
+	<bean id="depositCRUD" class="remote.rmi.DepositCRUD">
+		<constructor-arg>
+			<ref bean="dataSource" />
+		</constructor-arg>
+		<constructor-arg>
+			<value>UPDATE SP_ACCOUNT04A SET BALANCE = BALANCE + ? WHERE
+				ACCOUNT_ID = ?</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="accountByIdQueryCRUD" class="remote.rmi.AccountByIdQueryCRUD">
+		<constructor-arg>
+			<ref bean="dataSource" />
+		</constructor-arg>
+		<constructor-arg>
+			<value>SELECT * FROM SP_CUSTOMER04A A, SP_ACCOUNT04A B WHERE
+				A.CUSTOMER_NO = B.CUSTOMER_NO AND ACCOUNT_ID = ?</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="customerNoIncrementer" class="remote.rmi.MSSqlCustomerNoIncrementer">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate" />
+		</property>
+
+		<property name="crudStatements">
+			<ref bean="crudStatements" />
+		</property>
+	</bean>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+
+	<bean id="transactionTemplate"
+		class="org.springframework.transaction.support.TransactionTemplate">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+
+		<property name="service">
+			<ref bean="customerService" />
+		</property>
+		<property name="serviceName">
+			<value>nctbank/CustService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>remote.rmi.CustomerService</value>
+		</property>
+		<property name="registryPort">
+			<value>1099</value>
+		</property>
+
+	</bean>
+
+	<bean class="org.springframework.remoting.rmi.RmiServiceExporter">
+
+		<property name="service">
+			<ref bean="accountService" />
+		</property>
+		<property name="serviceName">
+			<value>AcctService</value>
+		</property>
+		<property name="serviceInterface">
+			<value>remote.rmi.AccountService</value>
+		</property>
+		<property name="registryPort">
+			<value>1099</value>
+		</property>
+
+	</bean>
+
+	<!-- <bean id="RemoteRmiRegistry" class="org.springframework.remoting.rmi.RmiRegistryFactoryBean"> 
+		<property name="alwaysCreate" value="true" /> <property name="port" value="3333"></property> 
+		</bean> -->
+
+<!-- 	<bean id="authCreditTask" class="javatimer.AuthCreditTask" />
+
+	<bean id="scheduledAuthCreditTask"
+		class="org.springframework.scheduling.timer.
+			ScheduledTimerTask">
+
+		<property name="timerTask">
+			<ref bean="authCreditTask" />
+		</property>
+		<property name="period">
+			<value>5000</value>
+		</property>
+
+	</bean>
+	<bean class="org.springframework.scheduling.timer.
+		TimerFactoryBean">
+
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledAuthCreditTask" />
+			</list>
+		</property>
+
+	</bean> -->
+
+
+
+</beans>

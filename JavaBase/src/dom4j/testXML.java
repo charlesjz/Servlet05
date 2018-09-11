@@ -21,7 +21,7 @@ public class testXML {
     public static void main(String[] args) {
         // TODO Auto-generated method stub
         try {
-            File file = new File("C:/Temp/PLAYLIST0322.gplf");
+            File file = new File("C:/Temp/PLAYLIST0816.gplf");
             SAXReader reader=new SAXReader();
             //读取xml文件到Document中
             Document doc=reader.read(file);

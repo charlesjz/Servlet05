@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="aop.advice.pointcut.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="aop.advice.pointcut.CustomerDaoImpl"/>
+	
+	<bean id="accountDao"
+			class="aop.advice.pointcut.AccountDaoImpl"/>
+	
+	<bean id="customerServiceTarget"
+			class="aop.advice.pointcut.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService"/>
+		</constructor-arg>
+		
+		<property name="locale">
+			<value>fr_FR</value>
+		</property>
+	</bean>
+	
+	<bean id="accountService"
+			class="aop.advice.pointcut.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="aop.advice.pointcut.AccountType">
+					<bean id="accountTypeEditor"
+							class="aop.advice.pointcut.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean class="aop.advice.pointcut.CustomerActivityLogger"/>
+	
+	<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>aop/advice/nctbank</value>
+		</property>
+	</bean>
+
+	<bean id="creditLimitIncreaseAdvice"
+			class="aop.advice.pointcut.CreditLimitIncreaseAdvice">
+			<property name="creditLimitCheckThreshold">
+				<value>250000</value>
+			</property>
+	</bean>
+	
+	<bean id="customerCreationMonitorAdvice"
+			class="aop.advice.pointcut.CustomerCreationMonitorAdvice"/>
+	
+	<bean id="customerCreationChecking"
+			class="aop.advice.pointcut.CustomerCreationChecking"/>
+			
+	<bean id="increaseCreditLimitPointcut"
+			class="aop.advice.pointcut.MyPointcut" >
+		<property name="classNames">
+			<list>
+				<value>aop.advice.pointcut.CustomerServiceImpl</value>
+			</list>
+		</property>
+		<property name="methodNames">
+			<list>
+				<value>increaseCreditLimit</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="createCustomerPointcut"
+			class="aop.advice.pointcut.MyPointcut" >
+		<property name="classNames">
+			<list>
+				<value>aop.advice.pointcut.CustomerServiceImpl</value>
+			</list>
+		</property>
+		<property name="methodNames">
+			<list>
+				<value>createCustomer</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="creditLimitIncreaseAdvisor"
+			class="aop.advice.pointcut.MyAdvisor" >
+		<property name="advice">
+			<ref bean="creditLimitIncreaseAdvice" />
+		</property>
+		<property name="pointcut">
+			<ref bean="increaseCreditLimitPointcut" />
+		</property>
+	</bean>
+	
+	<bean id="customerCreationMonitorAdvisor"
+			class="aop.advice.pointcut.MyAdvisor" >
+		<property name="advice">
+			<ref bean="customerCreationMonitorAdvice" />
+		</property>
+		<property name="pointcut">
+			<ref bean="createCustomerPointcut" />
+		</property>
+	</bean>
+	
+	<bean id="customerCreationCheckingAdvisor"
+			class="aop.advice.pointcut.MyAdvisor" >
+		<property name="advice">
+			<ref bean="customerCreationChecking" />
+		</property>
+		<property name="pointcut">
+			<ref bean="createCustomerPointcut" />
+		</property>
+	</bean>
+	
+	<bean id="customerService"
+			class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>aop.advice.pointcut.CustomerService</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>creditLimitIncreaseAdvisor</value>
+				<value>customerCreationMonitorAdvisor</value>
+				<value>customerCreationCheckingAdvisor</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="customerServiceTarget"/>
+		</property>
+	</bean>
+
+</beans>

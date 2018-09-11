@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="artemisServiceTarget"
+			class="aop.from_scratch.ArtemisServiceImpl">
+		<constructor-arg>
+			<value>Artemis</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="foodAdvice"
+			class="aop.from_scratch.FoodAdvice" />
+	
+	<bean id="movieInspectAdvice"
+			class="aop.from_scratch.MovieInspectAdvice">
+		<property name="blockedMovies">
+			<set>
+				<value>Bad Girls</value>
+				<value>I love ice cream</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="foodPointcut"
+			class="aop.from_scratch.MyPointcut">
+		<property name="classNames">
+			<set>
+				<value>aop.from_scratch.ArtemisServiceImpl</value>
+			</set>
+		</property>
+		<property name="methodNames">
+			<set>
+				<value>eat</value>
+			</set>
+		</property>
+	</bean>
+			
+	<bean id="movieInspectPointcut"
+			class="aop.from_scratch.MyPointcut">
+		<property name="classNames">
+			<set>
+				<value>aop.from_scratch.ArtemisServiceImpl</value>
+			</set>
+		</property>
+		<property name="methodNames">
+			<set>
+				<value>watchMovie</value>
+			</set>
+		</property>
+	</bean>
+			
+	<bean id="foodAdvisor"
+			class="aop.from_scratch.MyAdvisor">
+		<property name="advice">
+			<ref bean="foodAdvice" />
+		</property>
+		<property name="pointcut">
+			<ref bean="foodPointcut" />
+		</property>
+	</bean>
+	
+	<bean id="movieInspectAdvisor"
+			class="aop.from_scratch.MyAdvisor">
+		<property name="advice">
+			<ref bean="movieInspectAdvice" />
+		</property>
+		<property name="pointcut">
+			<ref bean="movieInspectPointcut" />
+		</property>
+	</bean>
+	
+	<bean id="artemisService"
+			class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<value>aop.from_scratch.ArtemisService</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>foodAdvisor</value>
+				<value>movieInspectAdvisor</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="artemisServiceTarget"/>
+		</property>
+	</bean>
+</beans>

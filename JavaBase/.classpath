@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="xml"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/commons-codec-1.9.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.6.jar"/>
@@ -40,7 +41,7 @@
 	<classpathentry kind="lib" path="lib/client-combined-3.8.1.jar" sourcepath="lib/client-combined-3.8.1-sources.jar"/>
 	<classpathentry kind="lib" path="lib/libs/dom4j-2.1.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/libs/dom4j-2.1.0-sources.jar"/>
-	<classpathentry kind="lib" path="lib/libs/dom4j-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/libs/dom4j-2.1.0.jar" sourcepath="C:/Users/Jiang/.m2/repository/org/dom4j/dom4j/2.1.0/dom4j-2.1.0-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="D:/lib/mysql-connector-java-5.1.45/mysql-connector-java-5.1.45-bin.jar"/>
 	<classpathentry kind="lib" path="D:/lib/lombok.jar"/>

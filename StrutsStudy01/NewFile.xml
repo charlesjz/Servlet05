@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN" "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd" >
+<taglib id="idvalue0" xmlns="http://java.sun.com/JSP/TagLibraryDescriptor">
+  <tlib-version id="idvalue1">tlib-version</tlib-version>
+  <jsp-version id="idvalue2">jsp-version</jsp-version>
+  <short-name id="idvalue3">short-name</short-name>
+  <uri id="idvalue4">uri</uri>
+  <display-name>display-name</display-name>
+  <small-icon>small-icon</small-icon>
+  <large-icon>large-icon</large-icon>
+  <description id="idvalue5">description</description>
+  <validator>
+    <validator-class>validator-class</validator-class>
+    <init-param>
+      <param-name id="idvalue6">param-name</param-name>
+      <param-value id="idvalue7">param-value</param-value>
+    </init-param>
+    <description id="idvalue8">description</description>
+  </validator>
+  <listener id="idvalue9">
+    <listener-class id="idvalue10">listener-class</listener-class>
+  </listener>
+  <tag id="idvalue11">
+    <name id="idvalue12">name</name>
+    <tag-class id="idvalue13">tag-class</tag-class>
+    <tei-class id="idvalue14">tei-class</tei-class>
+    <body-content id="idvalue15">body-content</body-content>
+    <display-name>display-name</display-name>
+    <small-icon>small-icon</small-icon>
+    <large-icon>large-icon</large-icon>
+    <description id="idvalue16">description</description>
+    <variable>
+      <name-given>name-given</name-given>
+    </variable>
+    <attribute id="idvalue17">
+      <name id="idvalue18">name</name>
+    </attribute>
+    <example id="idvalue19">example</example>
+  </tag>
+</taglib>

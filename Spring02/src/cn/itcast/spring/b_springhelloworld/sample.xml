@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="email.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDaoTarget"
+			class="email.CustomerDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+		<property name="crudStatements">
+			<ref bean="crudStatements"/>
+		</property>
+		<property name="customerNoIncrementer">
+			<ref bean="customerNoIncrementer"/>
+		</property>
+
+	</bean>
+	
+	<bean id="accountDaoTarget"
+			class="email.AccountDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+		<property name="crudStatements">
+			<ref bean="crudStatements"/>
+		</property>
+		<property name="depositCRUD">
+			<ref bean="depositCRUD"/>
+		</property>
+		<property name="accountByIdQueryCRUD">
+			<ref bean="accountByIdQueryCRUD"/>
+		</property>
+
+	</bean>
+
+	<bean id="customerService"
+			class="email.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService"/>
+		</constructor-arg>
+		
+		<property name="locale">
+			<value>en_US</value>
+		</property>
+
+		<property name="confirmationMailMessageTemplate">
+			<ref bean="confirmationMailMessage"/>
+		</property>
+
+	</bean>
+	
+	<bean id="accountService"
+			class="email.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="email.AccountType">
+					<bean id="accountTypeEditor"
+							class="email.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>email/nctbank</value>
+		</property>
+	</bean>
+
+	<bean id="appLoggerInterceptor"
+			class="email.ApplicationLoggerInterceptor">
+		<constructor-arg index="0">
+			<value>c:\\temp\\applog.txt</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="appLoggerAdvisor"
+			class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="appLoggerInterceptor"/>
+		</property>
+		<property name="pattern">
+			<value>#.+</value>
+		</property>
+	</bean>
+	
+	<bean id="autoProxyCreator"
+			class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	</bean>
+
+	<bean id="propertyConfigurer"
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>src/email/jdbc2.properties</value>
+				<value>src/email/email.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>${database.driver}</value>
+		</property>
+		<property name="url">
+			<value>${database.url}</value>
+		</property>
+		<property name="username">
+			<value>${database.username}</value>
+		</property>
+		<property name="password">
+			<value>${database.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="jdbcTemplate"
+			class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<bean id="crudStatements"
+			class="email.CRUDStatements">
+		<property name="insertCustomerSql">
+			<value>INSERT INTO SP_CUSTOMER04A ( CUSTOMER_NO, FIRST_NAME, LAST_NAME, PHONE_NUMBER, ADDRESS, EMAIL, CREDIT_LIMIT) VALUES ( ?, ?, ?, ?, ?, ?, ? )</value>
+		</property>
+		<property name="findCustomerByIdSql">
+			<value>SELECT * FROM SP_CUSTOMER04A WHERE CUSTOMER_NO = ?</value>
+		</property>
+		<property name="insertAccountSql">
+			<value>INSERT INTO SP_ACCOUNT04A ( ACCOUNT_ID, CUSTOMER_NO, CURRENCY, TYPE, BALANCE ) VALUES ( ?, ?, ?, ?, ? )</value>
+		</property>
+		<property name="accountListSql">
+			<value>SELECT * FROM SP_ACCOUNT04A WHERE CUSTOMER_NO = ?</value>
+		</property>
+		<property name="retrieveCustomerNumberSql">
+			<value>SELECT COUNT(*) FROM SP_CUSTOMER04A</value>
+		</property>
+		<property name="findAccountByIdSql">
+			<value>SELECT * FROM SP_CUSTOMER04A A, SP_ACCOUNT04A B WHERE A.CUSTOMER_NO = B.CUSTOMER_NO AND ACCOUNT_ID = ?</value>
+		</property>
+		<property name="depositSql">
+			<value>UPDATE SP_ACCOUNT04A SET BALANCE = BALANCE + ? WHERE ACCOUNT_ID = ?</value>
+		</property>
+		<property name="customerNoIncSql">
+			<value>SELECT MAX(CUSTOMER_NO) + 1 FROM SP_CUSTOMER04A</value>
+		</property>
+	</bean>
+	
+	<bean id="depositCRUD"
+			class="email.DepositCRUD">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+		<constructor-arg>
+			<value>UPDATE SP_ACCOUNT04A SET BALANCE = BALANCE + ? WHERE ACCOUNT_ID = ?</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="accountByIdQueryCRUD"
+			class="email.AccountByIdQueryCRUD">
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+		<constructor-arg>
+			<value>SELECT * FROM SP_CUSTOMER04A A, SP_ACCOUNT04A B WHERE A.CUSTOMER_NO = B.CUSTOMER_NO AND ACCOUNT_ID = ?</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="customerNoIncrementer"
+			class="email.MSSqlCustomerNoIncrementer">
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+		
+		<property name="crudStatements">
+			<ref bean="crudStatements"/>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager"
+			class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+
+	<bean id="customerTransactionAttribute"
+			class="org.springframework.transaction.interceptor.DefaultTransactionAttribute">
+		<property name="propagationBehaviorName">
+			<value>PROPAGATION_REQUIRED</value>
+		</property>
+		<property name="isolationLevelName">
+			<value>ISOLATION_REPEATABLE_READ</value>
+		</property>
+	</bean>
+
+	<bean id="customerTransactionAttributeSource"
+			class="org.springframework.transaction.interceptor.MatchAlwaysTransactionAttributeSource">
+
+		<property name="transactionAttribute">
+			<ref bean="customerTransactionAttribute"/>
+		</property>
+
+	</bean>
+
+	<bean id="customerDao"
+			class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					email.CustomerDao
+				</value>
+			</list>
+		</property>
+			<property name="target">
+				<ref bean="customerDaoTarget"/>
+			</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="customerTransactionAttributeSource"/>
+		</property>
+
+	</bean>
+
+	<bean id="accountTransactionAttributeSource"
+			class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
+		<property name="properties">
+			<props>
+				<prop key="transfer">
+					PROPAGATION_REQUIRED,ISOLATION_READ_COMMITTED,-InsufficientFundException
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="accountDao"
+			class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+
+		<property name="proxyInterfaces">
+			<list>
+				<value>
+					email.AccountDao
+				</value>
+			</list>
+		</property>
+			<property name="target">
+				<ref bean="accountDaoTarget"/>
+			</property>
+		<property name="transactionManager">
+			<ref bean="transactionManager"/>
+		</property>
+		<property name="transactionAttributeSource">
+			<ref bean="accountTransactionAttributeSource"/>
+		</property>
+
+	</bean>
+
+	<!-- Using GMail -->	
+	<!-- 	 
+	<bean id="mailSender"
+			class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>smtp.gmail.com</value>
+		</property>
+		<property name="protocol">
+			<value>smtp</value>
+		</property>
+		<property name="port">
+			<value>587</value>
+		</property>
+		<property name="username">
+			<value>${email.username}</value>
+		</property>
+		<property name="password">
+			<value>${email.password}</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+	 -->
+	 
+	<!-- Using Yahoo Mail -->
+	 
+	<bean id="mailSender"
+			class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host">
+			<value>smtp.mail.yahoo.com</value>
+		</property>
+		<property name="port">
+			<value>587</value>
+		</property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+            </props>
+        </property>
+		<property name="username">
+			<value>${email.username}</value>
+		</property>
+		<property name="password">
+			<value>${email.password}</value>
+		</property>
+	</bean>
+	
+	 
+	<bean id="confirmationMailMessage"
+			class="org.springframework.mail.SimpleMailMessage">
+		<property name="to">
+			<value>customer</value>
+		</property>
+		<property name="from">
+			<value>mailtester001001@yahoo.ca</value>
+		</property>
+		<property name="subject">
+			<value>Re: Credit limit increase</value>
+		</property>
+	</bean>
+
+</beans>

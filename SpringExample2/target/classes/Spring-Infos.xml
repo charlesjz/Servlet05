@@ -1,0 +1,12 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean name="infourl" class="main.java.com.mkyong.common.Infos"
+		scope="singleton" lazy-init="default">
+		<property name="url" value="https://www.monster.ca/jobs/search/?q=java-Developer&where=toronto&page=2"></property>
+		<property name="param" value=""></property>
+	</bean>
+
+</beans>

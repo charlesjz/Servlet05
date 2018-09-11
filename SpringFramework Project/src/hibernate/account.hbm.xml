@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"file:///hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="hibernate">
+	<class name="Account"
+			table="SP_ACCOUNT04A"
+			lazy="true">
+		<id	name="accountId"
+			column="ACCOUNT_ID"
+			unsaved-value="0"
+			type="int">
+			<generator class="increment"/>
+		</id>
+		<property name="accountType"
+				type="hibernate.AccountCompositeType">
+			<column name="TYPE"/>
+			<column name="CURRENCY"/>
+		</property>
+		<property
+			name="balance"
+			column="BALANCE"/>
+		<many-to-one
+			name="customer"
+			column="CUSTOMER_NO"
+			class="Customer"
+			not-null="true"/>
+	</class>
+</hibernate-mapping>

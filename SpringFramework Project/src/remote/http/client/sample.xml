@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="propertyConfigurer"
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>src/remote/http/client/http.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customerService" class= "org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>http://${serverName}/${contextPath}/cust.service</value>
+		</property>
+		<property name="serviceInterface">
+			<value>remote.http.CustomerService</value>
+		</property>
+	</bean>
+
+	<bean id="accountService" class= "org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl">
+			<value>http://${serverName}/${contextPath}/acct.service</value>
+		</property>
+		<property name="serviceInterface">
+			<value>remote.http.AccountService</value>
+		</property>
+	</bean>
+
+</beans>

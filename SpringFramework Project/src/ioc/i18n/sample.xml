@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="ioc.i18n.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="ioc.i18n.CustomerDaoImpl"/>
+	
+	<bean id="accountDao"
+			class="ioc.i18n.AccountDaoImpl"/>
+	
+	<bean id="customerService"
+			class="ioc.i18n.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService"/>
+		</constructor-arg>
+		
+		<property name="locale">
+			<value>en_US</value>
+		</property>
+	</bean>
+	
+	<bean id="accountService"
+			class="ioc.i18n.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="ioc.i18n.AccountType">
+					<bean id="accountTypeEditor"
+							class="ioc.i18n.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean class="ioc.i18n.CustomerActivityLogger"/>
+	
+	<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>ioc/i18n/nctbank</value>
+		</property>
+	</bean>
+	
+
+</beans>

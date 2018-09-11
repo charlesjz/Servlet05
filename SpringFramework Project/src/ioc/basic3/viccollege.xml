@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="dbUtil"
+			class="ioc.basic3.DBUtilVicCourseImpl">
+		<property name="dbURL">
+			<value>http://localhost:3609/vic-course-db</value>
+		</property>
+		<property name="dbUsername">
+			<value>root</value>
+		</property>
+		<property name="dbPassword">
+			<value>password123</value>
+		</property>
+	</bean>
+	
+	<bean id="studentDao"
+			class="ioc.basic3.VicCollegeStudentDao"
+			singleton="true">
+		<property name="dbUtil">
+			<ref bean="dbUtil" />
+		</property>
+	</bean>
+	
+	<bean id="studentService"
+			class="ioc.basic3.VicCollegeStudentService"
+			init-method="checkDaoInjectionStatus"
+			singleton="false">
+		<property name="studentDao">
+			<ref bean="studentDao" />
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" version="3.1">
+  <display-name>Struts2</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>struts2a</display-name>
+    <filter-name>struts2a</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2a</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <servlet>
+    <description>FreemarkerServletDesc</description>
+    <display-name>FreemarkerServlet</display-name>
+    <servlet-name>FreemarkerServlet</servlet-name>
+    <servlet-class>freemarker.ext.servlet.FreemarkerServlet</servlet-class>
+    <init-param>
+      <description>Param-a</description>
+      <param-name>paramA</param-name>
+      <param-value>A</param-value>
+    </init-param>
+    <init-param>
+      <description>Param B</description>
+      <param-name>paramB</param-name>
+      <param-value>B</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FreemarkerServlet</servlet-name>
+    <url-pattern>/FreemarkerServlet</url-pattern>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+  <listener>
+    <listener-class>org.apache.struts2.dispatcher.listener.StrutsListener</listener-class>
+  </listener>
+</web-app>

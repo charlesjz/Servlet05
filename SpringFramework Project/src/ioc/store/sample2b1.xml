@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="store"
+			class="ioc.store.Store">
+		<!--
+		<constructor-arg type="int">
+			<value>12</value>
+		</constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<value>3</value>
+		</constructor-arg>
+		-->
+		<constructor-arg index="1">
+			<value>12</value>
+		</constructor-arg>
+		<constructor-arg index="0">
+			<value>3</value>
+		</constructor-arg>
+		<property name="products">
+			<list>
+				<value>Dell Computer 1211</value>
+				<value>IBM Monitor</value>
+				<value>Intel CPU P2.8</value>
+				<value>Fireball HD 100GB</value>
+				<value>DDR 400 512M</value>
+			</list>
+		</property>
+		<property name="employees">
+			<list>
+				<value>John Smith</value>
+				<value>Maria Sun</value>
+				<value>Bill Gates</value>
+			</list>
+		</property>
+		<property name="categories">
+			<set>
+				<value>Computer</value>
+				<value>Monitor</value>
+				<value>CPU</value>
+				<value>Hard Disk</value>
+				<value>Memory</value>
+			</set>
+		</property>
+		<property name="prices">
+			<map>
+				<entry key="Dell Computer 1211">
+					<value>1299</value>
+				</entry>
+				<entry key="DDR 400 512M">
+					<value>89.99</value>
+				</entry>
+				<entry key="Intel CPU P2.8">
+					<value>269</value>
+				</entry>
+				<entry key="Fireball HD 100GB">
+					<value>129.00</value>
+				</entry>
+				<entry key="IBM Monitor K231">
+					<value>699.99</value>
+				</entry>
+			</map>
+		</property>
+		<property name="config">
+			<props>
+				<prop key="filename">c:\\nct\cheater.txt</prop>
+				<prop key="username">nct</prop>
+				<prop key="password">pass</prop>
+			</props>
+		</property>
+		<property name="employer">
+			<!-- <value>Royal College of Technology Canada Ltd.</value> -->
+			<null/>
+		</property>
+	</bean>
+			
+
+</beans>

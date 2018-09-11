@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="dbConnector"
+			class="ioc.basic1.OnlineBankingDBConnector">
+		<property name="dbUrl">
+			<value>jdbc:db2://obdb</value>
+		</property>
+		<property name="dbUsername">
+			<value>abccba</value>
+		</property>
+		<property name="dbPassword">
+			<value>pass1234</value>
+		</property>
+	</bean>
+	
+	<bean id="bankingDao"
+			class="ioc.basic1.BankingDaoJdbcImpl">
+		<property name="dbConn">
+			<ref bean="dbConnector" />
+		</property>
+	</bean>
+
+	<bean id="bankingService"
+			class="ioc.basic1.BankingServiceImpl"
+			init-method="initializeAccountList"
+			destroy-method="releaseAccountList">
+		<property name="dao">
+			<ref bean="bankingDao" />
+		</property>
+	</bean>
+	
+	<bean id="account" class="ioc.basic1.Account" singleton="false">
+		<contructor-arg>
+			<value>123</value>
+		</contructor-arg>
+		<contructor-arg>
+			<value>321</value>
+		</contructor-arg>
+		<!-- 
+		<property name="accountNumber" value="100000" />
+		<property name="balance" value="100" />
+		 -->
+	</bean>
+
+</beans>

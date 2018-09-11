@@ -1,7 +1,7 @@
 package Chapter21;
 
 // Demonstrate URL.
-import java.net.*;
+import java.net.URL;
 class URLDemo {
 	public static void main(String args[]) throws Exception {
 		URL hp = new URL("http://www.HerbSchildt.com/Articles");

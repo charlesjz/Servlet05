@@ -16,6 +16,33 @@
   
   <servlet-mapping>
   	<servlet-name>abc</servlet-name>
-  	<url-pattern>/*</url-pattern>
+  	<url-pattern>/jsp/abc</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>def</servlet-name>
+  	<servlet-class>web.DefServlet</servlet-class>
+  	<init-param>
+  		<param-name>maxOnLine</param-name>
+  		<param-value>3145.00</param-value>
+  	</init-param>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>def</servlet-name>
+  	<url-pattern>/jsp/def</url-pattern>
+  </servlet-mapping>
+  
+  <filter>
+  	<filter-name>log</filter-name>
+  	<filter-class>web.LogFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>log</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <listener>
+  	<listener-class>web.MyListener</listener-class>
+  </listener>
 </web-app>

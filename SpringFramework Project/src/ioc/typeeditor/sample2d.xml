@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="ioc.typeeditor.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="ioc.typeeditor.CustomerDaoImpl"/>
+	
+	<bean id="accountDao"
+			class="ioc.typeeditor.AccountDaoImpl"/>
+	
+	<bean id="customerService"
+			class="ioc.typeeditor.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="accountService"
+			class="ioc.typeeditor.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="customerService"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="ioc.typeeditor.AccountType">
+					<bean id="accountTypeEditor"
+							class="ioc.typeeditor.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+
+</beans>

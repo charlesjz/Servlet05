@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="dao.basic.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="dao.basic.CustomerDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+
+	</bean>
+	
+	<bean id="accountDao"
+			class="dao.basic.AccountDaoJdbc">
+
+		<property name="jdbcTemplate">
+			<ref bean="jdbcTemplate"/>
+		</property>
+
+	</bean>
+
+	<bean id="customerService"
+			class="dao.basic.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService"/>
+		</constructor-arg>
+		
+		<property name="locale">
+			<value>fr_FR</value>
+		</property>
+
+	</bean>
+	
+	<bean id="accountService"
+			class="dao.basic.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="dao.basic.AccountType">
+					<bean id="accountTypeEditor"
+							class="dao.basic.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>dao/basic/nctbank</value>
+		</property>
+	</bean>
+
+	<bean id="appLoggerInterceptor"
+			class="dao.basic.ApplicationLoggerInterceptor">
+		<constructor-arg index="0">
+			<value>c:\\applog.txt</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="appLoggerAdvisor"
+			class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+		<property name="advice">
+			<ref bean="appLoggerInterceptor"/>
+		</property>
+		<property name="pattern">
+			<value>#.+</value>
+		</property>
+	</bean>
+	
+	<bean id="autoProxyCreator"
+			class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+	</bean>
+
+	<bean id="propertyConfigurer"
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>src/dao/basic/jdbc.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="dataSource"
+			class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName">
+			<value>${database.driver}</value>
+		</property>
+		<property name="url">
+			<value>${database.url}</value>
+		</property>
+		<property name="username">
+			<value>${database.username}</value>
+		</property>
+		<property name="password">
+			<value>${database.password}</value>
+		</property>
+	</bean>
+	
+	<bean id="jdbcTemplate"
+			class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+	
+	<bean id="insertCustomerStatementCreator"
+			class="dao.basic.InsertCustomerStatementCreator">
+		<constructor-arg>
+			<value>INSERT INTO SP_CUSTOMER04A ( CUSTOMER_NO, FIRST_NAME, LAST_NAME, PHONE_NUMBER, ADDRESS, EMAIL, CREDIT_LIMIT) VALUES ( ?, ?, ?, ?, ?, ?, ? )</value>
+		</constructor-arg>
+	</bean>
+
+</beans>

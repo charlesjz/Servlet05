@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+		<item value="D:\Workspaces\MyEclipse 8.5\HuaweiHLR"/>
+		<item value="D:\Eclipse\workspace-java\HuaWei_HSS_DB_01"/>
+		<item value="C:\Users\Jiang\Downloads\HelloWorld.zip"/>
+		<item value="C:\Users\Jiang\Downloads\spring-boot-ajax-example"/>
+		<item value="C:\Users\Jiang\Downloads\jsonld-java-master"/>
+		<item value="C:\Users\Jiang\Downloads\jackson-core-master"/>
+		<item value="C:\Users\Jiang\Downloads\SpringMVC"/>
+		<item value="C:\Users\Jiang\Downloads\spring-boot-file-upload-ajax-rest"/>
+		<item value="C:\Users\Jiang\Downloads\HibernateExample"/>
+		<item value="C:\Users\Jiang\Downloads\Hibernate-one-to-one-xml-mapping.zip"/>
+		<item value="C:\Users\Jiang\Downloads\spring-boot-non-web-example.zip"/>
+		<item value="C:\Users\Jiang\Downloads\Spring-Email-Gmail-Smtp-Example.zip"/>
+		<item value="C:\Users\Jiang\Downloads\spring-boot-spring-security-thymeleaf"/>
+		<item value="C:\Users\Jiang\Downloads\SpringExample\SpringExample"/>
 		<item value="D:\Eclipse\workspace-java"/>
 		<item value="D:\David\Java Core\John &amp; Peter&apos;s Java Project.zip"/>
 		<item value="C:\Users\Jiang\Downloads\CustomerReview_Exercise"/>
@@ -10,7 +24,7 @@
 	<section name="CleanDialogSettings">
 		<item value="500" key="DIALOG_WIDTH"/>
 		<item value="true" key="BUILD_ALL"/>
-		<item value="false" key="TOGGLE_SELECTED"/>
+		<item value="true" key="TOGGLE_SELECTED"/>
 		<item value="457" key="DIALOG_HEIGHT"/>
 		<item value="1420" key="DIALOG_X_ORIGIN"/>
 		<item value="236" key="DIALOG_Y_ORIGIN"/>
@@ -22,8 +36,13 @@
 		<item value="true" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
 			<item value=""/>
+			<item value="D:\David\SpringFramework Project\SpringFramework Project"/>
+			<item value="D:\David\VicJavaSE201802"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value="C:\Users\Jiang\Downloads\spring-boot-web-thymeleaf.zip"/>
+			<item value="C:\Users\Jiang\Downloads\Spring-Email-Gmail-Smtp-Example.zip"/>
+			<item value=""/>
 			<item value="D:\David\Java Core\John &amp; Peter&apos;s Java Project.zip"/>
 		</list>
 	</section>
@@ -32,9 +51,10 @@
 		</list>
 	</section>
 	<section name="NewWizardAction">
-		<item value="org.eclipse.m2e.core.wizards.Maven2ProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
+		<item value="org.eclipse.jdt.ui.wizards.JavaProjectWizard" key="NewWizardSelectionPage.STORE_SELECTED_ID"/>
 		<list key="NewWizardSelectionPage.STORE_EXPANDED_CATEGORIES_ID">
-			<item value="org.eclipse.m2e"/>
+			<item value="org.eclipse.ui.Basic"/>
+			<item value="org.eclipse.wst.web.ui"/>
 		</list>
 	</section>
 	<section name="ChooseWorkspaceDialogSettings">

@@ -10,7 +10,6 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Date;
-import java.util.Scanner;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html 	xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:a="http://java.sun.com/jsf/passthrough">
+
+
+<h:head>
+  <title>Hello World - Input Form</title>
+</h:head>
+<h:body>
+
+	<h:form>
+		<h1>Hello World</h1>
+		please:<h:inputText id="qwu"></h:inputText>
+		<h:inputText id="name" value="#{theUserName}" a:placeholder="What's your name?"/>
+		<h:commandButton value="Submit" action="myresponse"/>
+	</h:form>
+	
+</h:body>
+
+
+</html>

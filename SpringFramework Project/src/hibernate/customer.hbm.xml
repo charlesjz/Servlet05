@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"file:///hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="hibernate">
+	<class name="Customer"
+			table="SP_CUSTOMER04A"
+			lazy="true">
+		<id	name="customerNo"
+			column="CUSTOMER_NO"
+			unsaved-value="0"
+			type="int">
+			<generator class="increment"/>
+		</id>
+		<property
+			name="firstName"
+			column="FIRST_NAME"
+			type="string"/>
+		<property
+			name="lastName"
+			column="LAST_NAME"
+			type="string"/>
+		<property
+			name="phoneNumber"
+			column="PHONE_NUMBER"
+			type="string"/>
+		<property
+			name="address"
+			column="ADDRESS"
+			type="string"/>
+		<property
+			name="email"
+			column="EMAIL"
+			type="string"/>
+		<property
+			name="creditLimit"
+			column="CREDIT_LIMIT"
+			type="int"/>
+		<set
+			name="accounts"
+			inverse="true"
+			lazy="false"
+			cascade="save-update">
+			<key column="CUSTOMER_NO"/>
+			<one-to-many class="Account"/>
+		</set>
+	</class>
+</hibernate-mapping>

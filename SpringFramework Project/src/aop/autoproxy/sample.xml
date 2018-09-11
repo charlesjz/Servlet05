@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="aop.autoproxy.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="aop.autoproxy.CustomerDaoImpl"/>
+	
+	<bean id="accountDao"
+			class="aop.autoproxy.AccountDaoImpl"/>
+	
+	<bean id="customerServiceTarget"
+			class="aop.autoproxy.CustomerServiceImpl">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountService"/>
+		</constructor-arg>
+		
+		<property name="locale">
+			<value>fr_FR</value>
+		</property>
+	</bean>
+	
+	<bean id="accountService"
+			class="aop.autoproxy.AccountServiceImpl">
+
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		
+		<property name="accountTypes">
+			<list>
+				<value>Saving/CAD</value>
+				<value>Checking/CAD</value>
+				<value>Saving/USD</value>
+				<value>Checking/USD</value>
+				<value>Mortgage/CAD</value>
+				<value>GIC/CAD</value>
+				<value>GIC/USD</value>
+				<value>Mutual Funds/CAD</value>
+				<value>Mutual Funds/USD</value>
+				<value>GIC/EUR</value>
+				<value>GIC/AUD</value>
+				<value>GIC/HKD</value>
+			</list>
+		</property>
+
+	</bean>
+	
+	<bean id="customEditorConfigurer"
+			class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="aop.autoproxy.AccountType">
+					<bean id="accountTypeEditor"
+							class="aop.autoproxy.AccountTypeEditor"/>
+				</entry>
+			</map>
+		</property>
+	</bean>
+	
+	<bean class="aop.autoproxy.CustomerActivityLogger"/>
+	
+	<bean id="messageSource"
+			class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename">
+			<value>aop/autoproxy/nctbank</value>
+		</property>
+	</bean>
+
+	<bean id="creditLimitIncreaseAdvice"
+			class="aop.autoproxy.CreditLimitIncreaseAdvice"/>
+	
+	<bean id="creditLimitIncreasePointcutAdvisor"
+			class="org.springframework.aop.support.DefaultPointcutAdvisor">
+		<property name="pointcut">
+			<bean class="aop.autoproxy.DynamicTimeSensitivePointcut">
+				<property name="methods">
+					<list>
+						<value>aop.autoproxy.CustomerServiceImpl.increaseCreditLimit</value>
+					</list>
+				</property>
+				<property name="hourList">
+					<value>7,10,11,12,15,16,10,21,22</value>
+				</property>
+			</bean>
+		</property>
+		<property name="advice">
+			<ref bean="creditLimitIncreaseAdvice"/>
+		</property>
+	</bean>
+	
+	<bean id="customerCreationMonitorAdvice"
+			class="aop.autoproxy.CustomerCreationMonitorAdvice"/>
+	
+	<bean id="customerCreationMonitorPointcutAdvisor"
+			class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedName">
+			<value>createCustomer</value>
+		</property>
+		<property name="advice">
+			<ref bean="customerCreationMonitorAdvice"/>
+		</property>
+	</bean>
+	
+	<bean id="customerCreationChecking"
+			class="aop.autoproxy.CustomerCreationChecking"/>
+	
+	<bean id="customerCreationCheckingPointcutAdvisor"
+			class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+		<property name="mappedName">
+			<value>createCustomer</value>
+		</property>
+		<property name="advice">
+			<ref bean="customerCreationChecking"/>
+		</property>
+	</bean>
+	
+	<bean id="exceptionLogger"
+			class="aop.autoproxy.ExceptionLogger"/>
+
+	<bean id="customerService"
+			class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="proxyInterfaces">
+			<list>
+				<value>aop.autoproxy.CustomerService</value>
+				<value>aop.autoproxy.CreditLimit</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>creditLimitIncreasePointcutAdvisor</value>
+				<value>customerCreationMonitorPointcutAdvisor</value>
+				<value>customerCreationCheckingPointcutAdvisor</value>
+				<value>exceptionLogger</value>
+				<value>creditLimitCheckingMixin</value>
+			</list>
+		</property>
+		<property name="target">
+			<ref bean="customerServiceTarget"/>
+		</property>
+	</bean>
+	
+	<bean id="creditLimitCheckingMixin"
+			class="aop.autoproxy.CreditLimitCheckingMixin"
+			singleton="false">
+		<property name="creditLimit">
+			<value>10000</value>
+		</property>
+	</bean>
+	
+	<bean id="creditLimitCheckingAdvisor"
+			class="org.springframework.aop.support.DefaultIntroductionAdvisor"
+			singleton="false">
+		<constructor-arg>
+			<ref bean="creditLimitCheckingMixin"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="performanceMonitorInterceptor"
+			class="aop.autoproxy.PerformanceMonitorInterceptor">
+		<constructor-arg index="0">
+			<value>500</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<value>1500</value>
+		</constructor-arg>
+		<constructor-arg index="2">
+			<value>5000</value>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="performanceMonitor"
+			class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+		<property name="beanNames">
+			<list>
+				<value>customer*</value>
+				<value>*Service</value>
+			</list>
+		</property>
+		<property name="interceptorNames">
+			<value>performanceMonitorInterceptor</value>
+		</property>
+	</bean>
+
+</beans>

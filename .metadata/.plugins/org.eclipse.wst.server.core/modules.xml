@@ -2,4 +2,5 @@
 <modules>
   <module moduleId="org.eclipse.jst.jee.server:Struts2_a" serverId="Tomcat v6.0 Server at localhost"/>
   <module moduleId="org.eclipse.jst.jee.server:servlet02"/>
+  <module moduleId="org.eclipse.jst.jee.server:JSFhello" serverId="Tomcat v9.0 Server at localhost"/>
 </modules>

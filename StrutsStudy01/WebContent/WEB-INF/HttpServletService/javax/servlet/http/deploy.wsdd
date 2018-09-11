@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from HttpServletService WSDL service -->
+
+  <service name="HttpServlet" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://http.servlet.javax"/>
+      <parameter name="wsdlServiceElement" value="HttpServletService"/>
+      <parameter name="schemaQualified" value="http://http.servlet.javax"/>
+      <parameter name="wsdlServicePort" value="HttpServlet"/>
+      <parameter name="className" value="javax.servlet.http.HttpServlet"/>
+      <parameter name="wsdlPortType" value="HttpServlet"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://http.servlet.javax" name="service" qname="operNS:service" soapAction="">
+        <parameter xmlns:pns="http://http.servlet.javax" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:req" type="tns:anyType"/>
+        <parameter xmlns:pns="http://http.servlet.javax" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:res" type="tns:anyType"/>
+      </operation>
+      <parameter name="allowedMethods" value="service"/>
+
+      <typeMapping xmlns:ns="http://http.servlet.javax" qname="ns:&gt;serviceResponse" type="java:javax.servlet.http.ServiceResponse" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

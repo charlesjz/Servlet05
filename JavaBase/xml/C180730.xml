@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<student>
+  <name>Jiang</name>
+  <age>49</age>
+  <hobbies>swimming</hobbies>
+  <hobbies>reading</hobbies>
+  <hobbies>exercise</hobbies>
+  <address>
+    <street>293 Miller Park</street>
+    
+  </address>
+</student>

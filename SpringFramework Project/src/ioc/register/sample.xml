@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"
+"file:///spring-beans.dtd">
+<beans>
+
+	<bean id="customer"
+			class="ioc.register.Customer"
+			singleton="false">
+		<property name="creditLimit">
+			<value>300</value>
+		</property>
+	</bean>
+	
+	<bean id="customerDao"
+			class="ioc.register.CustomerDaoImpl"/>
+	
+	<bean id="accountDao"
+			class="ioc.register.AccountDaoImpl"/>
+	
+	<bean id="customerService"
+			class="ioc.register.CustomerServiceImpl"
+			init-method="initCustomerService">
+		<property name="creditIncreaseLimit">
+			<value>500</value>
+		</property>
+		<constructor-arg>
+			<ref bean="customerDao"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="accountService"
+			class="ioc.register.AccountServiceImpl"
+			autowire="autodetect">
+		<!--
+		<constructor-arg>
+			<ref bean="customerService"/>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="accountDao"/>
+		</constructor-arg>
+		-->
+	</bean>
+	
+	<bean id="beanRegister"
+			class="ioc.register.BeanRegister"/>
+
+</beans>
