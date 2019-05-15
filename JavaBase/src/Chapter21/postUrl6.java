@@ -19,8 +19,8 @@ public class postUrl6 {
 
 	static int step=0;
 	static int counter=0;
-	static int i=160;
-	static int j=6519;
+	static int i=0;
+	static int j=0;
 	static int count=0;
 	static int anchor=0;
 	
